@@ -4,13 +4,15 @@ import searchEngines from "./search-engines"
 
 export default {
   settings: {
-    hintAlign:                "left",
-    hintCharacters:           "qwertasdfgzxcvb",
+    hintAlign: "left",
+    hintCharacters: "qwertasdfgzxcvb",
     omnibarSuggestionTimeout: 500,
-    richHintsForKeystroke:    1,
-    defaultSearchEngine:      "dd",
-    stealFocusOnLoad:         false,
-    blocklistPattern:         /mail.google\.com/i,
+    richHintsForKeystroke: 1,
+    defaultSearchEngine: "dd",
+    stealFocusOnLoad: false,
+    blocklistPattern: /mail.google\.com/i,
+    useLocalMarkdownAPI: false,
+    showModeStatus: true,
     theme,
   },
 

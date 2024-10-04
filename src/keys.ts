@@ -31,9 +31,9 @@ const unmaps = {
     "zQ",
     "zz",
     "zR",
-    "ab",
-    "Q",
-    "q",
+    // "ab",
+    // "Q",
+    // "q",
     "ag",
     "af",
     "yp",
@@ -42,13 +42,22 @@ const unmaps = {
     "<Ctrl-h>",
   ],
   searchAliases: {
-    s: ["g", "d", "b", "e", "w", "s", "h", "y"],
+    s: [
+      "g", 
+      "d", 
+      "b", 
+      "e",
+      "w",
+      "s",
+      "h",
+      "y"
+    ],
   },
 }
 
 const maps: Record<string, Mapping[]> = {}
 
-maps["globals"] = [
+maps.global = [
   {
     alias: "F",
     map: "gf",

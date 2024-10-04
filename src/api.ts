@@ -169,6 +169,7 @@ interface SurfingKeysAPI {
 declare global {
   var api: SurfingKeysAPI // You can replace 'any' with a more specific type if needed
   var surfingKeys: undefined | SurfingKeysAPI
+  var settings: Record<string, any>
 }
 
 const getApi = () => {

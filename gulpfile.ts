@@ -6,7 +6,7 @@ import gulpNotify from "gulp-notify"
 import fs from "fs/promises"
 import url from "url"
 import { exec } from "child_process"
-import paths, { getPath, getSrcPath } from "./paths._ts"
+import paths, { getPath, getSrcPath } from "./paths.ts"
 
 const requireJson = async (f) => JSON.parse(await fs.readFile(f))
 const log = (...msg) => process.stderr.write(`${msg.join("\n")}\n`)
