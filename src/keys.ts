@@ -532,9 +532,14 @@ maps["github.com"] = [
   },
   {
     alias: "C",
-    description: "Open repository Commits page",
-    callback: () => actions.gh.openRepoPage("/commits"),
+    description: "Open repository contributors page",
+    callback: () => actions.gh.openRepoPage("/graphs/contributors"),
   },
+  // {
+  //   alias: "co",
+  //   description: "Open repository Commits page",
+  //   callback: () => actions.gh.openRepoPage("/commits"),
+  // },
   {
     alias: "I",
     description: "Open repository Issues page",

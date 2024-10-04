@@ -6,8 +6,6 @@ import util from "./util"
 
 const { tabOpenLink, Front, Hints, Normal, RUNTIME, Clipboard } = api
 
-const actions: Record<string, any> = {}
-
 // Globally applicable actions
 // ===========================
 

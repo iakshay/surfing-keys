@@ -1,4 +1,6 @@
-import theme from "./theme"
+/// <reference path="../declarations.d.ts" />
+
+import theme from "./theme.css?raw"
 import keys from "./keys"
 import searchEngines from "./search-engines"
 

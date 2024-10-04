@@ -7,7 +7,7 @@
     "jsx": "preserve", // If using React
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
   },
   "include": ["*.js", "./src/**/*.ts", "./src/**/*.js", "gulpfile.ts", "vite.config.ts", "paths.ts"],
   "exclude": ["node_modules"]
