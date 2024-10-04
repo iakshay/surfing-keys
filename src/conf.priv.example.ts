@@ -28,6 +28,9 @@ const keys = {
   google_cx_no: "", // nodejs.org/api/*
   google_cx_cs: "", // chrome.google.com/webstore/*
   google_cx_py: "", // https://docs.python.org/3.12/library/*
+
+    // https://dictionaryapi.com/
+  dictionary_api_key: ""
 }
 
 // A function which accepts a Digital Object Identifier (DOI) and returns a URL,

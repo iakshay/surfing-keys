@@ -13,6 +13,7 @@ export default {
     blocklistPattern: /mail.google\.com/i,
     useLocalMarkdownAPI: false,
     showModeStatus: true,
+    autoSpeakOnInlineQuery: false,
     theme,
   },
 

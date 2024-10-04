@@ -149,4 +149,18 @@ export default `
   .collapseRichHints {
     animation: none;
   }
+
+  #sk_status {
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+    padding: 4px 8px 0 8px;
+    border-radius: 4px 4px 0px 0px;
+    background: #ffc10773;
+    border: 0;
+    font-size: 18px;
+    padding: 2px;
+    font-family: Helvetica;
+    font-weight: lighter;
+  }
 `

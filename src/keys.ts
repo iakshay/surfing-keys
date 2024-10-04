@@ -1,4 +1,4 @@
-import actions from "./actions"
+import * as actions from "./actions"
 import api from "./api"
 import help from "./help"
 import priv from "./conf.priv"

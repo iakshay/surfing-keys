@@ -58,7 +58,7 @@ interface Front {
   ): void
   openOmnibar(args: { type: string }): void
   registerInlineQuery(args: {
-    url: string | (() => string)
+    url: string | ((args: string) => string)
     parseResult: (result: any) => string
     headers?: Record<string, string>
   }): void
