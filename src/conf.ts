@@ -1,6 +1,6 @@
-import theme from "./theme.js"
-import keys from "./keys.js"
-import searchEngines from "./search-engines.js"
+import theme from "./theme"
+import keys from "./keys"
+import searchEngines from "./search-engines"
 
 export default {
   settings: {

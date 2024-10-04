@@ -1,11 +1,9 @@
 import { html } from "uhtml"
 import DOMPurify from "dompurify"
 
-import api from "./api.js"
+import api from "./api"
 
 const { Hints, RUNTIME } = api
-
-const util = {}
 
 const promisify = (fn) =>
   (...args) =>
@@ -16,17 +14,15 @@ const promisify = (fn) =>
         reject(e)
       }
     })
-util.promisify = promisify
 
 const runtime = promisify(RUNTIME)
-util.runtime = runtime
 
-util.runtimeHttpRequest = async (url, opts) => {
+const runtimeHttpRequest = async (url, opts) => {
   const res = await runtime("request", { ...opts, url })
   return res.text
 }
 
-util.getURLPath = ({ count = 0, domain = false } = {}) => {
+const getURLPath = ({ count = 0, domain = false } = {}) => {
   let path = window.location.pathname.slice(1)
   if (count) {
     path = path.split("/").slice(0, count).join("/")
@@ -37,19 +33,19 @@ util.getURLPath = ({ count = 0, domain = false } = {}) => {
   return path
 }
 
-util.getMap = (mode, keys) =>
+const getMap = (mode, keys) =>
   keys.split("").reduce((acc, c) => acc[c] || acc, mode.mappings).meta || null
 
-util.escapeHTML = (text) => {
+const escapeHTML = (text) => {
   const el = document.createElement("span")
   el.textContent = text
   return el.innerHTML
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
-util.escapeRegExp = (str) => str.replace(/[.*+\-?^${}()|[\]\\]/g, "\\$&")
+const escapeRegExp = (str) => str.replace(/[.*+\-?^${}()|[\]\\]/g, "\\$&")
 
-util.until = (check, test = (a) => a, maxAttempts = 50, interval = 50) =>
+const until = (check, test = (a) => a, maxAttempts = 50, interval = 50) =>
   new Promise((resolve, reject) => {
     const f = (attempts = 0) => {
       const res = check()
@@ -72,7 +68,7 @@ const localStorageFns = () => {
   // }
   // if (typeof chrome !== "undefined") {
   //   return [chrome.storage.local.get, chrome.storage.local.set].map((fn) =>
-  //     util.promisify(fn.bind(chrome.storage.local))
+  //     promisify(fn.bind(chrome.storage.local))
   //   )
   // }
   const fn = () =>
@@ -82,63 +78,63 @@ const localStorageFns = () => {
 
 const [localStorageGet, localStorageSet] = localStorageFns()
 
-util.localStorage = {}
+const localStorage = {}
 
-util.localStorage.fullkey = (key) => `surfingkeys-conf.${key}`
+localStorage.fullkey = (key) => `surfingkeys-conf.${key}`
 
-util.localStorage.get = async (key) => {
-  const fullkey = util.localStorage.fullkey(key)
+localStorage.get = async (key) => {
+  const fullkey = localStorage.fullkey(key)
   return (await localStorageGet(fullkey))[fullkey]
 }
 
-util.localStorage.set = async (key, val) => {
-  const fullkey = util.localStorage.fullkey(key)
+localStorage.set = async (key, val) => {
+  const fullkey = localStorage.fullkey(key)
   const storageObj = { [fullkey]: val }
   return localStorageSet(storageObj)
 }
 
-util.htmlUnsafe = (content) => html.node([content])
+const htmlUnsafe = (content) => html.node([content])
 
-util.htmlPurify = (content, config = { USE_PROFILES: { html: true } }) =>
-  util.htmlUnsafe(DOMPurify.sanitize(content, config))
+const htmlPurify = (content, config = { USE_PROFILES: { html: true } }) =>
+  htmlUnsafe(DOMPurify.sanitize(content, config))
 
-util.htmlNode = (template, ...values) => html.node(template, ...values)
+const htmlNode = (template, ...values) => html.node(template, ...values)
 
-util.htmlForEach = (items) => items.map((item) => html.for(item)`${item}`)
+const htmlForEach = (items) => items.map((item) => html.for(item)`${item}`)
 
-util.html = (template, ...values) =>
-  util.htmlNode(template, ...values).outerHTML
+const html = (template, ...values) =>
+  htmlNode(template, ...values).outerHTML
 
-util.suggestionItem = (props = {}) =>
+const suggestionItem = (props = {}) =>
   (template, ...values) => ({
-    html: util.html(template, ...values),
+    html: html(template, ...values),
     props,
   })
 
-util.urlItem = (title, url, { desc = null, query = null } = {}) => {
+const urlItem = (title, url, { desc = null, query = null } = {}) => {
   const descItems = desc && desc.length > 0
     ? (Array.isArray(desc) ? desc : [desc]).map(
-      (d) => util.htmlNode`<div>${d}</div>`,
+      (d) => htmlNode`<div>${d}</div>`,
     )
     : []
-  return util.suggestionItem({ url, query: query ?? title })`
+  return suggestionItem({ url, query: query ?? title })`
     <div>
       <div style="font-weight: bold">${title}</div>
-      ${util.htmlForEach(descItems)}
+      ${htmlForEach(descItems)}
       <div style="opacity: 0.7; line-height: 1.3em">${url}</div>
     </div>
   `
 }
 
-util.defaultSelector = "a[href]:not([href^=javascript])"
+const defaultSelector = "a[href]:not([href^=javascript])"
 
-util.querySelectorFiltered = (
-  selector = util.defaultSelector,
+const querySelectorFiltered = (
+  selector = defaultSelector,
   filter = () => true,
 ) => [...document.querySelectorAll(selector)].filter(filter)
 
-util.createHints = (
-  selector = util.defaultSelector,
+const createHints = (
+  selector = defaultSelector,
   action = Hints.dispatchMouseClick,
   attrs = {},
 ) =>
@@ -153,12 +149,12 @@ util.createHints = (
     )
   })
 
-util.createHintsFiltered = (filter, selector, ...args) => {
-  util.createHints(util.querySelectorFiltered(selector, filter), ...args)
+const createHintsFiltered = (filter, selector, ...args) => {
+  createHints(querySelectorFiltered(selector, filter), ...args)
 }
 
 // https://developer.mozilla.org/en-US/docs/web/api/element/getboundingclientrect
-util.isRectVisibleInViewport = (rect) =>
+const isRectVisibleInViewport = (rect) =>
   rect.height > 0
   && rect.width > 0
   && rect.bottom >= 0
@@ -166,22 +162,22 @@ util.isRectVisibleInViewport = (rect) =>
   && rect.top <= (window.innerHeight || document.documentElement.clientHeight)
   && rect.left <= (window.innerWidth || document.documentElement.clientWidth)
 
-util.isElementInViewport = (e) =>
+const isElementInViewport = (e) =>
   e.offsetHeight > 0
   && e.offsetWidth > 0
   && !e.getAttribute("disabled")
-  && util.isRectVisibleInViewport(e.getBoundingClientRect())
+  && isRectVisibleInViewport(e.getBoundingClientRect())
 
-util.getDuckduckgoFaviconUrl = (url) => {
-  const u = url instanceof URL ? url : new URL(url)
-  return new URL(`https://icons.duckduckgo.com/ip3/${u.hostname}.ico`).href
+const getDuckduckgoFaviconUrl = (url) => {
+  const u = url instanceof URL ? url : new URL(url);
+  return new URL(`https://icons.duckduckgo.com/ip3/${u.hostname}.ico`).href;
 }
 
 // Originally based on JavaScript Pretty Date
 // https://johnresig.com/blog/javascript-pretty-date/
 // Copyright (c) 2011 John Resig (ejohn.org)
 // Licensed under the MIT and GPL licenses.
-util.prettyDate = (date) => {
+const prettyDate = (date) => {
   const diff = (new Date().getTime() - date.getTime()) / 1000
   const dayDiff = Math.floor(diff / 86400)
   if (Number.isNaN(dayDiff) || dayDiff < 0) return ""
@@ -201,4 +197,24 @@ util.prettyDate = (date) => {
   }${count ? " ago" : ""}`
 }
 
-export default util
+export default {
+  until,
+  escapeRegExp,
+  getMap,
+  runtime, 
+  promisify,
+  urlItem,
+  getDuckduckgoFaviconUrl,
+  isElementInViewport,
+  createHintsFiltered,
+  querySelectorFiltered,
+  htmlNode,
+  htmlForEach,
+  suggestionItem,
+  prettyDate,
+  localStorage,
+  runtimeHttpRequest,
+  getURLPath,
+  htmlPurify,
+  createHints
+}

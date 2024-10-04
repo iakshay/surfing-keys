@@ -8,7 +8,7 @@ Forked from [surfingkeys-conf](https://github.com/b0o/surfingkeys-conf)
 
 It includes:
 
-- [263 key mappings for 103 unique websites](#site-specific-key-mappings) which **automate many common actions**.
+- [262 key mappings for 102 unique websites](#site-specific-key-mappings) which **automate many common actions**.
 - [Omnibar integration with 38 Search Engines and Knowledge Sources](#omnibar-search-engine-integrations), many of which include **inline images** and **instant answers**.
 
 ## Table of Contents
@@ -96,8 +96,6 @@ It includes:
 <tr><td><code>&lt;Space&gt;p</code></td><td>Open search in Perplexity</td></tr>
 <tr><td><code>&lt;Space&gt;sgh</code></td><td>Search site:github.com</td></tr>
 <tr><td><code>&lt;Space&gt;sre</code></td><td>Search site:reddit.com</td></tr>
-<tr><th colspan="2"><a href="//ebay.com"><img src="https://www.google.com/s2/favicons?domain=ebay.com&sz=16" width="16px">ebay.com</a></th></tr><tr><td><strong>Mapping</strong></td><td><strong>Description</strong></td></tr>
-<tr><td><code>&lt;Space&gt;fs</code></td><td>Fakespot</td></tr>
 <tr><th colspan="2"><a href="//fonts.adobe.com"><img src="https://www.google.com/s2/favicons?domain=fonts.adobe.com&sz=16" width="16px">fonts.adobe.com</a></th></tr><tr><td><strong>Mapping</strong></td><td><strong>Description</strong></td></tr>
 <tr><td><code>&lt;Space&gt;a</code></td><td>Activate font</td></tr>
 <tr><td><code>&lt;Space&gt;s</code></td><td>Favorite font</td></tr>

@@ -2,12 +2,12 @@
 
 // This is a reference for how conf.priv.js should look.
 //
-// Copy this file to a new file named "conf.priv.js" and update
+// Copy this file to a new file named "conf.priv" and update
 // the API keys as needed.
 //
-// WARNING: Don't `git commit` your actual "conf.priv.js" file if you
+// WARNING: Don't `git commit` your actual "conf.priv" file if you
 // add real API keys to it! Malicious parties frequently scan GitHub for
-// these keys and use them for bad stuff. The "conf.priv.js" file is already
+// these keys and use them for bad stuff. The "conf.priv" file is already
 // ignored by .gitignore, but just be safe.
 
 // These are private API keys which are required for certain search completions.

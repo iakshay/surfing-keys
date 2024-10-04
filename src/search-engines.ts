@@ -1,5 +1,5 @@
-import priv from "./conf.priv.js"
-import util from "./util.js"
+import priv from "./conf.priv"
+import util from "./util"
 
 const {
   htmlPurify,

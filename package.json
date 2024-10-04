@@ -28,6 +28,7 @@
     "uhtml": "^3.1.0"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.5",
     "del": "^7.0.0",
     "eslint": "8.27.0",
     "eslint-config-airbnb-base": "15.0.0",

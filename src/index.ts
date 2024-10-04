@@ -1,6 +1,6 @@
-import conf from "./conf.js"
-import help from "./help.js"
-import api from "./api.js"
+import conf from "./conf"
+import help from "./help"
+import api from "./api"
 
 const { categories } = help
 const {
@@ -13,7 +13,35 @@ const {
   addSearchAlias,
 } = api
 
-const registerKey = (domain, mapObj, siteleader) => {
+type SearchEngine = {
+  favicon: string
+  alias: string
+  name: string
+  search: string
+  compl: string
+  callback?: (response: any) => string[]
+}
+
+export type Mapping = {
+  alias: string
+  category?: number
+  description: string
+  leader?: string
+} & (
+  | {
+      callback: () => void
+    }
+  | {
+      map: string
+    }
+)
+
+export type Domain = string
+
+type Aliases = Record<Domain, Domain[]>
+type KeyMaps = Record<Domain, Mapping[]>
+
+const registerKey = (domain: Domain, mapObj: Mapping, siteleader: string) => {
   const {
     alias,
     callback,
@@ -40,23 +68,27 @@ const registerKey = (domain, mapObj, siteleader) => {
   }
 }
 
-const registerKeys = (maps, aliases, siteleader) => {
-  const hydratedAliases = Object.entries(
-    aliases,
-  ).flatMap(([baseDomain, aliasDomains]) =>
-    aliasDomains.flatMap((a) => ({ [a]: maps[baseDomain] })))
+const registerKeys = (maps: KeyMaps, aliases: Aliases, siteleader: string) => {
+  const hydratedAliases = Object.entries(aliases).flatMap(
+    ([baseDomain, aliasDomains]) =>
+      aliasDomains.flatMap((a) => ({ [a]: maps[baseDomain] }))
+  )
 
   const mapsAndAliases = Object.assign({}, maps, ...hydratedAliases)
 
   Object.entries(mapsAndAliases).forEach(([domain, domainMaps]) =>
-    domainMaps.forEach((mapObj) => registerKey(domain, mapObj, siteleader)))
+    domainMaps.forEach((mapObj) => registerKey(domain, mapObj, siteleader))
+  )
 }
 
-const registerSearchEngines = (searchEngines, searchleader) =>
+const registerSearchEngines = (
+  searchEngines: SearchEngine[],
+  searchleader: string
+) =>
   Object.values(searchEngines).forEach((s) => {
     const options = {
       favicon_url: s.favicon,
-      skipMaps:    true,
+      skipMaps: true,
     }
     addSearchAlias(
       s.alias,
@@ -66,22 +98,23 @@ const registerSearchEngines = (searchEngines, searchleader) =>
       s.compl,
       s.callback,
       undefined,
-      options,
+      options
     )
     mapkey(`${searchleader}${s.alias}`, `#8Search ${s.name}`, () =>
-      Front.openOmnibar({ type: "SearchEngine", extra: s.alias }))
+      Front.openOmnibar({ type: "SearchEngine", extra: s.alias })
+    )
     mapkey(
       `c${searchleader}${s.alias}`,
       `#8Search ${s.name} with clipboard contents`,
       () => {
         Clipboard.read((c) => {
           Front.openOmnibar({
-            type:  "SearchEngine",
-            pref:  c.data,
+            type: "SearchEngine",
+            pref: c.data,
             extra: s.alias,
           })
         })
-      },
+      }
     )
   })
 
@@ -90,7 +123,7 @@ const main = async () => {
   if (conf.settings) {
     Object.assign(
       settings,
-      typeof conf.settings === "function" ? conf.settings() : conf.settings,
+      typeof conf.settings === "function" ? conf.settings() : conf.settings
     )
   }
 
@@ -113,7 +146,10 @@ const main = async () => {
   }
 
   if (conf.searchEngines) {
-    registerSearchEngines(conf.searchEngines, conf.searchleader ?? "o")
+    registerSearchEngines(
+      conf.searchEngines as SearchEngine[],
+      conf.searchleader ?? "o"
+    )
   }
 
   if (conf.keys && conf.keys.maps) {

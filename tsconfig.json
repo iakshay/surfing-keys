@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve", // If using React
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["*.js", "./src/**/*.ts", "./src/**/*.js", "gulpfile.ts", "vite.config.ts", "paths.ts"],
+  "exclude": ["node_modules"]
+}

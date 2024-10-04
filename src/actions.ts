@@ -1,14 +1,14 @@
 import ghReservedNames from "github-reserved-names"
 
-import api from "./api.js"
-import priv from "./conf.priv.js"
-import util from "./util.js"
+import api from "./api"
+import priv from "./conf.priv"
+import util from "./util"
 
 const {
   tabOpenLink, Front, Hints, Normal, RUNTIME, Clipboard,
 } = api
 
-const actions = {}
+const actions : Record<string, any> = {}
 
 // Globally applicable actions
 // ===========================
@@ -740,11 +740,11 @@ actions.gh.openSourceFile = () => {
 
 actions.gh.openProfile = () =>
   actions.gh.openPage(
-    `${document.querySelector("meta[name='user-login']").content}`,
+    `${document.querySelector("meta[name='user-login']")?.content}`,
   )
 
 actions.gh.toggleLangStats = () =>
-  document.querySelector(".repository-lang-stats-graph").click()
+  document.querySelector(".repository-lang-stats-graph")?.click()
 
 actions.gh.goParent = () => {
   const segments = window.location.pathname.split("/").filter((s) => s !== "")
