@@ -7,7 +7,7 @@ const gulpfilePath = fileURLToPath(import.meta.url)
 const paths = {
   assets: "assets",
   buildDir: "build/",
-  confPrivExample: "conf.priv.example.js",
+  confPrivExample: "src/conf.priv.example.js",
   dirname: path.dirname(gulpfilePath),
   favicons: "assets/favicons",
   faviconsManifest: "favicons.json",

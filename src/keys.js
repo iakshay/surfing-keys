@@ -1224,14 +1224,6 @@ maps["devdocs.io"] = [
   },
 ]
 
-maps["ebay.com"] = [
-  {
-    alias:       "fs",
-    description: "Fakespot",
-    callback:    actions.fakeSpot,
-  },
-]
-
 maps["ikea.com"] = [
   {
     alias:       "d",

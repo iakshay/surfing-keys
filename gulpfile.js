@@ -1,15 +1,12 @@
 import gulp from "gulp"
-import webpack from "webpack"
-import webpackStream from "webpack-stream"
 import replace from "gulp-replace"
 import rename from "gulp-rename"
 import { deleteAsync } from "del"
 import gulpNotify from "gulp-notify"
 import fs from "fs/promises"
 import url from "url"
-
+import { exec } from "child_process"
 import paths, { getPath, getSrcPath } from "./paths.js"
-import webpackConfig from "./webpack.config.js"
 
 const requireJson = async (f) => JSON.parse(await fs.readFile(f))
 const log = (...msg) => process.stderr.write(`${msg.join("\n")}\n`)
@@ -37,16 +34,6 @@ const escapeHTML = (text) =>
         "=":  "&#x3D;",
       }[s]),
   )
-
-const { WEBPACK_MODE } = process.env
-if (WEBPACK_MODE) {
-  if (!["production", "development"].includes(WEBPACK_MODE)) {
-    log(`ERROR: Invalid WEBPACK_MODE: ${WEBPACK_MODE}`)
-    process.exit(1)
-  }
-  webpackConfig.mode = WEBPACK_MODE
-  log(`Using webpack mode: ${WEBPACK_MODE}`)
-}
 
 const pkg = await requireJson(getPath(paths.pkgJson))
 
@@ -262,62 +249,34 @@ task(
   }),
 )
 
-task("docs-full", series("docs"))
+function viteBuild(done) {
+  exec('vite build', (err, stdout, stderr) => {
+      if (err) {
+          console.error(`Error during Vite build: ${err.message}`);
+          return done(err);
+      }
+      console.log(`Vite build output: ${stdout}`);
+      if (stderr) {
+          console.error(`Vite build errors: ${stderr}`);
+      }
+      done();
+  });
+}
 
-const build = () =>
-  src(getSrcPath(paths.sources.entrypoint))
-    .pipe(webpackStream(webpackConfig, webpack))
-    .on("error", (err) => {
-      notify.onError({
-        title:   `Build failure [${pkg.name}]`,
-        message: `${err.message.split("\n").slice(0, 1)}`,
-        timeout: 10,
-      })(err)
-      throw err
-    })
-    .pipe(rename(paths.output))
-    .pipe(dest(getPath(paths.buildDir)))
-    .pipe(
-      notify({
-        title:   `Build success [${pkg.name}]`,
-        message: "No issues",
-        timeout: 2,
-      }),
-    )
+task("build", viteBuild)
 
-task("build", build)
-
-task("build-full", series(parallel("check-priv", "clean"), "build"))
-
-task("dist", parallel("docs-full", "build-full"))
-
-task(
-  "install",
-  series("build", () =>
-    src(getPath(paths.buildDir, paths.output)).pipe(dest(paths.installDir))),
-)
+task("build-full", series(parallel("docs", "clean"), "build"))
 
 const watch = (g, t) => () =>
   gulp.watch(g, { ignoreInitial: false, usePolling: true }, t)
 
 const srcWatchPat = getSrcPath("*.(js|mjs|css)")
 
-task("watch-build", watch(srcWatchPat, series("build")))
-task("watch-install", watch(srcWatchPat, series("install")))
 task(
-  "watch-docs",
+  "watch",
   watch(
     [srcWatchPat, getPath(paths.readme), getPath(paths.assets, "**/*")],
-    series("docs"),
+    series("build-full"),
   ),
 )
-task(
-  "watch-docs-full",
-  watch(
-    [srcWatchPat, getPath(paths.readme), getPath(paths.assets, "**/*")],
-    series("docs-full"),
-  ),
-)
-task("watch", series("watch-install"))
-
 task("default", series("build"))
