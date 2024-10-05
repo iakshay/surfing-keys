@@ -6,9 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "npm exec gulp --",
-    "lint": "eslint src gulpfile.js webpack.config.js",
-    "build": "npm run gulp build"
+    "watch": "fswatch src/**/*.ts | xargs -I {} npx vite build",
+    "build": "npm run vite build"
   },
   "repository": {
     "type": "git",
@@ -23,13 +22,14 @@
   "contributors": [],
   "license": "MIT",
   "dependencies": {
-    "dompurify": "^2.4.1",
-    "github-reserved-names": "^2.0.4",
-    "uhtml": "^3.1.0"
+    "github-reserved-names": "^2.0.4"
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
     "del": "^7.0.0",
+    "dompurify": "^2.4.1",
+    "github-reserved-names": "^2.0.4",
+    "uhtml": "^3.1.0",
     "eslint": "8.27.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "^2.26.0",

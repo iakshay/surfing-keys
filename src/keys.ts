@@ -326,6 +326,7 @@ maps["amazon.com"] = [
   {
     alias: "R",
     description: "View Product Reviews",
+    // TODO: Link to product reviews
     callback: () => actions.openLink("#customerReviews"),
   },
   {
