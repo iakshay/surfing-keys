@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "fswatch src/**/*.ts | xargs -I {} npx vite build",
+    "watch": "fswatch src/*.ts src/**/*.ts | xargs -I {} npx vite build",
     "build": "npm run vite build"
   },
   "repository": {

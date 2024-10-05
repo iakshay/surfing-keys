@@ -1,6 +1,8 @@
 import priv from "../conf.priv"
 import util from "../util"
 import { wa } from "./wolframalpha"
+import { gh } from "./github"
+
 const {
   htmlPurify,
   htmlNode,
@@ -178,24 +180,7 @@ completions.dh.callback = (response) =>
   })
 
 // GitHub
-completions.gh = {
-  alias: "gh",
-  name: "github",
-  search: "https://github.com/search?q=",
-  compl: "https://api.github.com/search/repositories?sort=stars&order=desc&q=",
-}
-
-completions.gh.callback = (response) =>
-  JSON.parse(response.text).items.map((s) => {
-    let prefix = ""
-    if (s.stargazers_count) {
-      prefix += `[★${parseInt(s.stargazers_count, 10)}] `
-    }
-    return urlItem(prefix + s.full_name, s.html_url, {
-      query: s.full_name,
-      desc: s.description,
-    })
-  })
+completions.gh = gh
 
 // Vim Wiki
 completions.vw = {
@@ -586,18 +571,8 @@ completions.np.callback = (response) =>
     `
   })
 
-// TypeScript docs
-completions.ts = {
-  alias: "ts",
-  name: "typescript",
-  domain: "www.typescriptlang.org",
-  search: "https://duckduckgo.com/?q=site%3Awww.typescriptlang.org+",
-  compl:
-    "https://bgcdyoiyz5-dsn.algolia.net/1/indexes/typescriptlang?x-algolia-application-id=BGCDYOIYZ5&x-algolia-api-key=37ee06fa68db6aef451a490df6df7c60&query=",
-  favicon: "https://www.typescriptlang.org/favicon-32x32.png",
-}
 
-completions.ts.callback = async (response) => {
+const algoliaCompletion = async (response) => {
   const res = JSON.parse(response.text)
   const t = Object.entries(
     res.hits.reduce((acc, hit) => {
@@ -644,6 +619,49 @@ completions.ts.callback = async (response) => {
   return t
 }
 
+
+// TypeScript docs
+completions.ts = {
+  alias: "ts",
+  name: "typescript",
+  domain: "www.typescriptlang.org",
+  search: "https://duckduckgo.com/?q=site%3Awww.typescriptlang.org+",
+  compl:
+    "https://bgcdyoiyz5-dsn.algolia.net/1/indexes/typescriptlang?x-algolia-application-id=BGCDYOIYZ5&x-algolia-api-key=37ee06fa68db6aef451a490df6df7c60&query=",
+  favicon: "https://www.typescriptlang.org/favicon-32x32.png",
+  callback: algoliaCompletion
+}
+
+// TypeScript docs
+completions.lcp = {
+  alias: "lcp",
+  name: "langchain python",
+  domain: "https://python.langchain.com",
+  search: "https://duckduckgo.com/?q=site%3Apython.langchain.com+",
+  compl:
+    "https://vau016laws-dsn.algolia.net/1/indexes/python-langchain-latest?x-algolia-application-id=VAU016LAWS&x-algolia-api-key=6c01842d6a88772ed2236b9c85806441&query=",
+  favicon: getDuckduckgoFaviconUrl("https://python.langchain.com"),
+  callback: algoliaCompletion
+}
+
+completions.lcp = {
+  alias: "lcj",
+  name: "langchain js",
+  domain: "https://js.langchain.com",
+  search: "https://duckduckgo.com/?q=site%js.langchain.com+",
+  compl:
+    "https://3ezv6u1tyc-dsn.algolia.net/1/indexes/js-langchain-latest?x-algolia-application-id=3EZV6U1TYC&x-algolia-api-key=180851bbb9ba0ef6be9214849d6efeaf&query=",
+  favicon: getDuckduckgoFaviconUrl("https://js.langchain.com"),
+  callback: algoliaCompletion
+}
+
+completions.raycast = {
+  alias: "rc",
+  name: "raycast",
+  domain: "https://developers.raycast.com/",
+  search: "https://duckduckgo.com/?q=site%3Adevelopers.raycast.com ",
+  favicon: getDuckduckgoFaviconUrl("https://developers.raycast.com/"),
+}
 // ****** Social Media & Entertainment ****** //
 
 // Hacker News (YCombinator)

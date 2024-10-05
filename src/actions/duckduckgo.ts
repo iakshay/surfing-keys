@@ -38,14 +38,14 @@ const dg = {
     const goog = new URL("https://google.com/search")
 
     if (c.query) {
-      goog.searchParams.set("q", c.q)
+      goog.searchParams.set("q", c.query)
     }
 
     if (c.type === "images") {
       goog.searchParams.set("tbm", "isch")
     } else if (c.type === "videos") {
       goog.searchParams.set("tbm", "vid")
-    } else if (iar === "news") {
+    } else if (c.type === "news") {
       goog.searchParams.set("tbm", "nws")
     } else if (c.type === "maps") {
       goog.pathname = "/maps"

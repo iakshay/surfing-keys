@@ -161,3 +161,8 @@
   - [dearrrfish/surfingkeys-config](https://github.com/dearrrfish/surfingkeys-config)
   - [bkudria/dotfiles](https://github.com/bkudria/dotfiles/tree/c3b0ab65c8d820b8a91cbc349324eeed3c3551df/.surfingkeys.d/src/sites)
   - [wthueb/surfingkeys-cfg](https://github.com/wthueb/surfingkeys-cfg)
+- UserScripts
+  - All websites: [Gist search](https://gist.github.com/search?q=%22%3D%3DUserScript%3D%3D%22)
+  - [Github](https://github.com/Mottie/GitHub-userscripts)
+    - [Custom keyboard hotkeys](https://github.com/Mottie/GitHub-userscripts/blob/master/github-custom-hotkeys.user.js)
+

@@ -12,6 +12,7 @@ const { Clipboard, Front, Hints } = api
 // Remove undesired default mappings
 const unmaps = {
   mappings: [
+    "x",
     "sb",
     "sw",
     "ob",
